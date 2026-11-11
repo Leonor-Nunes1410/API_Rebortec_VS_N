@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rebortec</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <style>
+        .mensagem { display: none; padding: 8px; margin-top: 10px; border-radius: 4px; }
+        .mensagem.erro { background-color: #f8d7da; color: #721c24; }
+        .mensagem.sucesso { background-color: #d4edda; color: #155724; }
+    </style>
+</head>
+<body class="bg-light p-4">
+
+    <div class="container" style="max-width: 600px;">
+        <h1 class="text-center mb-4">Rebortec</h1>
+
+        <!-- FORMULÁRIO DE LOGIN -->
+        <div id="formLogin" class="card p-4 shadow-sm mb-4">
+            <h3>Iniciar Sessão</h3>
+            <form onsubmit="fazerLogin(event)">
+                <div class="mb-3">
+                    <input type="text" id="loginUsername" class="form-control" placeholder="Utilizador" required>
+                </div>
+                <div class="mb-3">
+                    <input type="password" id="loginPassword" class="form-control" placeholder="Palavra-passe" required>
+                </div>
+                <button type="submit" class="btn btn-primary w-100">Entrar</button>
+            </form>
+            <div id="mensagemLogin" class="mensagem"></div>
+            <p class="mt-3 text-center">Não tem conta? <a href="#" onclick="mostrarRegisto()">Registe-se aqui</a></p>
+        </div>
+
+        <!-- FORMULÁRIO DE REGISTO -->
+        <div id="formRegisto" class="card p-4 shadow-sm mb-4" style="display: none;">
+            <h3>Registar Conta</h3>
+            <form onsubmit="criarUtilizador(event)">
+                <div class="mb-3">
+                    <input type="text" id="novoUsername" class="form-control" placeholder="Novo Utilizador" required>
+                </div>
+                <div class="mb-3">
+                    <input type="password" id="novaPassword" class="form-control" placeholder="Palavra-passe (mín. 6 carateres)" required>
+                </div>
+                <div class="mb-3">
+                    <input type="password" id="confirmarPassword" class="form-control" placeholder="Confirmar Palavra-passe" required>
+                </div>
+                <button type="submit" class="btn btn-success w-100">Criar Conta</button>
+            </form>
+            <div id="mensagemRegisto" class="mensagem"></div>
+            <p class="mt-3 text-center">Já tem conta? <a href="#" onclick="mostrarLogin()">Iniciar sessão</a></p>
+        </div>
+
+        <!-- PAINEL PRINCIPAL -->
+        <div id="paginaPrincipal" style="display: none;">
+
+            <div class="card p-3 shadow-sm mb-3 d-flex flex-row justify-content-between align-items-center">
+                <span>Bem-vindo(a), <strong id="utilizadorAtual"></strong>!</span>
+                <button class="btn btn-danger btn-sm" onclick="fazerLogout()">Terminar Sessão</button>
+            </div>
+
+            <div class="card p-3 shadow-sm mb-3">
+                <h4>Cálculo de IVA (23%)</h4>
+                <form onsubmit="calcularIVA(event)">
+                    <div class="input-group mb-2">
+                        <input type="number" step="0.01" id="valorBase" class="form-control" placeholder="Valor Base (€)" required>
+                        <button type="submit" class="btn btn-primary">Calcular IVA</button>
+                    </div>
+                </form>
+                <div id="resultadoIVA" class="fw-bold text-success mt-2"></div>
+            </div>
+
+            <div class="card p-3 shadow-sm mb-3">
+                <h4>Adicionar Novo Cliente</h4>
+                <form onsubmit="guardarCliente(event)">
+                    <div class="mb-2">
+                        <input type="text" id="nomeCliente" class="form-control" placeholder="Nome do Cliente" required>
+                    </div>
+                    <div class="mb-2">
+                        <input type="text" id="nifCliente" class="form-control" placeholder="NIF (9 dígitos)" maxlength="9" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">Guardar Cliente</button>
+                </form>
+                <div id="resultadoGuardar" class="fw-bold mt-2"></div>
+            </div>
+
+            <div class="card p-3 shadow-sm">
+                <h4>Clientes Registados no MySQL</h4>
+                <table class="table table-striped mt-2">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nome</th>
+                            <th>NIF</th>
+                        </tr>
+                    </thead>
+                    <tbody id="ListaClientes">
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
